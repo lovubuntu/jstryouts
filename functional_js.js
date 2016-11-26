@@ -23,18 +23,19 @@ function flow() {
 
 function drop(count) {
   return function(array) {
-    for (var i = 0; i < count; i++) {
-      array.shift();
-    }
-    return array;
+    var localCopyArray = Array.from(array);
+    return localCopyArray.splice(count);
   }
 }
 
 function map(factor) {
   return function(array) {
-    return array.map(function(v){return v*factor});
+    var localCopyArray = Array.from(array);
+    return localCopyArray.map(function(v){return v*factor});
   }
 }
 
-console.log(flow(drop(3))([1,2,3,4,5,5,6,7,8]));
-console.log(flow(drop(3), map(4))([1,2,3,4,5,5,6,7,8]));
+var arrayValues = [1,2,3,4,5,5,6,7,8];
+console.log(flow(drop(3))(arrayValues));
+console.log(flow(drop(3), map(4))(arrayValues));
+console.log(arrayValues);
